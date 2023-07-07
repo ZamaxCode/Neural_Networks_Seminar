@@ -19,23 +19,21 @@ t = torch.tensor([
     [1]
     ],dtype=torch.float)
 
-class Adaline(torch.nn.Module):
+class Perceptron(torch.nn.Module):
     def __init__(self) -> None:
         super().__init__()
         self.linear = torch.nn.Linear(2,1)
-        self.sigmoid = torch.nn.Sigmoid()
     
     def forward(self, tensor):
-        v = self.linear(tensor)
-        y = self.sigmoid(v)
+        y = self.linear(tensor)
         return y
 
-adaline = Adaline()
+perceptron = Perceptron()
 loss_fn = torch.nn.MSELoss()
-optimizer = torch.optim.SGD(params=adaline.parameters(), lr=0.01)
+optimizer = torch.optim.SGD(params=perceptron.parameters(), lr=0.01)
 
 for epoch in range(1000):
-    y = adaline(x)
+    y = perceptron(x)
     e = loss_fn(y,t)
     optimizer.zero_grad()
     e.backward()
@@ -49,8 +47,8 @@ plt.scatter(x=x1, y=x2)
 plt.xlim(-2,2)
 plt.ylim(-2,2)
 
-weights=torch.tensor(adaline.linear.weight)
-bias=torch.tensor(adaline.linear.bias)
+weights=torch.tensor(perceptron.linear.weight)
+bias=torch.tensor(perceptron.linear.bias)
 
 a=weights[0,0]
 b=weights[0,1]
